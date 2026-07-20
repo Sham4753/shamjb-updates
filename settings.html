@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات العامة - Sham JB Pro</title>
+    <script src="tailwind.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-6 max-w-lg">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">⚙️ الإعدادات العامة</h1>
+            <a href="index.html" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 text-sm">↩️ رجوع</a>
+            <button onclick="doLogout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 text-sm">🔒 خروج</button>
+        </div>
+
+        <!-- معلومات المطعم -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secRestaurant')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">🏪 معلومات المطعم</h2>
+                <span id="secRestaurant-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secRestaurant" class="hidden px-6 pb-6 space-y-3">
+            <input type="text" id="resName" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="اسم المطعم">
+            <input type="text" id="resPhone" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="رقم الهاتف">
+            <input type="text" id="resAddress" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="العنوان">
+            <button onclick="saveRestaurant()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">💾 حفظ</button>
+            </div>
+        </div>
+
+        <!-- الدعم الفني (بيانات المطوّر - تظهر بشاشة الترحيب) -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secSupport')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">🛠️ الدعم الفني</h2>
+                <span id="secSupport-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secSupport" class="hidden px-6 pb-6 space-y-3">
+            <p class="text-xs text-gray-400">بتظهر بشاشة الترحيب حتى صاحب المطعم يعرف مين يتواصل معه لو صار عنده مشكلة</p>
+            <input type="text" id="supportPhone" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="رقم الدعم الفني">
+            <input type="text" id="supportWhatsapp" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="رقم واتساب (بدون + أو رموز)">
+            <input type="text" id="supportFacebook" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="رابط فيسبوك">
+            <input type="text" id="supportInstagram" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="رابط انستغرام">
+            <button onclick="saveSupportInfo()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">💾 حفظ</button>
+            </div>
+        </div>
+
+        <!-- إعدادات العملة -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secCurrency')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">💱 إعدادات العملة</h2>
+                <span id="secCurrency-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secCurrency" class="hidden px-6 pb-6 space-y-3">
+            <select id="currency" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="SYP">ل.س</option>
+                <option value="USD">$</option>
+                <option value="EUR">€</option>
+            </select>
+            <input type="number" id="usdRate" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="سعر صرف الدولار (1$ = ؟ ل.س)">
+            <input type="number" id="eurRate" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="سعر صرف اليورو (1€ = ؟ ل.س)">
+            <button onclick="saveCurrency()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">💾 حفظ</button>
+            </div>
+        </div>
+
+        <!-- إعدادات الطابعة -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secPrinter')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">🖨️ إعدادات الطابعة</h2>
+                <span id="secPrinter-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secPrinter" class="hidden px-6 pb-6 space-y-3">
+            <select id="paperWidth" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="58">58mm</option>
+                <option value="80" selected>80mm</option>
+            </select>
+            <select id="fontSize" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="small">صغير</option>
+                <option value="medium" selected>وسط</option>
+                <option value="large">كبير</option>
+            </select>
+            <select id="copies" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="1">نسخة 1</option>
+                <option value="2">نسختين</option>
+                <option value="3">3 نسخ</option>
+            </select>
+            <textarea id="footerText" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="نص نهاية الإيصال"></textarea>
+            <button onclick="savePrinter()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">💾 حفظ</button>
+            </div>
+        </div>
+
+        <!-- إدارة المستخدمين -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secUsers')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">👤 إدارة المستخدمين</h2>
+                <span id="secUsers-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secUsers" class="hidden px-6 pb-6 space-y-3">
+            <div class="flex gap-2">
+                <input type="text" id="newUsername" class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none" placeholder="اسم المستخدم">
+                <input type="password" id="newPassword" class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none" placeholder="كلمة المرور">
+            </div>
+            <select id="newRole" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none">
+                <option value="cashier">👨‍🍳 كاشير</option>
+                <option value="manager">👨‍💼 مدير</option>
+            </select>
+            <button onclick="addUser()" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition">➕ إضافة مستخدم</button>
+            <div id="usersList" class="space-y-2 pt-2"></div>
+            </div>
+        </div>
+
+        <!-- قفل الشاشة -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secLock')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">🔒 قفل الشاشة</h2>
+                <span id="secLock-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secLock" class="hidden px-6 pb-6 space-y-3">
+            <div class="flex items-center gap-3">
+                <input type="checkbox" id="lockEnabled" class="w-5 h-5">
+                <label>تفعيل قفل الشاشة التلقائي</label>
+            </div>
+            <input type="number" id="lockTimeout" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="مدة القفل بالدقائق (مثال: 5)">
+            <button onclick="saveLock()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">💾 حفظ</button>
+            </div>
+        </div>
+
+        <!-- نسخ احتياطي -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secBackup')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">💾 نسخ احتياطي</h2>
+                <span id="secBackup-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secBackup" class="hidden px-6 pb-6 space-y-3">
+            <button onclick="createBackup()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">📦 إنشاء نسخة احتياطية</button>
+            <div id="backupsList" class="text-sm text-gray-600 max-h-64 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- تحديث -->
+        <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+            <button onclick="toggleSection('secUpdate')" class="w-full flex items-center justify-between p-4 text-right">
+                <h2 class="text-lg font-bold text-gray-700">🔄 تحديث النظام</h2>
+                <span id="secUpdate-icon" class="text-gray-400">▼</span>
+            </button>
+            <div id="secUpdate" class="hidden px-6 pb-6 space-y-3">
+            <div class="text-center text-gray-600">
+                <p>الإصدار الحالي: <span id="currentVersion" class="font-bold">-</span></p>
+            </div>
+            <button onclick="checkUpdate()" class="w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition">🔄 تحقق من التحديثات</button>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast" class="hidden fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg text-center z-50"></div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            el.classList.toggle('hidden');
+            icon.textContent = el.classList.contains('hidden') ? '▼' : '▲';
+        }
+
+        async function init() {
+            await loadRestaurant();
+            await loadSupportInfo();
+            await loadCurrency();
+            await loadPrinter();
+            await loadUsers();
+            await loadLock();
+            await loadBackups();
+            await loadVersion();
+        }
+
+        // ===== مطعم =====
+        async function loadRestaurant() {
+            const r = await fetch('/api/settings/restaurant');
+            const d = await r.json();
+            document.getElementById('resName').value = d.name || '';
+            document.getElementById('resPhone').value = d.phone || '';
+            document.getElementById('resAddress').value = d.address || '';
+        }
+        async function saveRestaurant() {
+            await fetch('/api/settings/restaurant', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: document.getElementById('resName').value,
+                    phone: document.getElementById('resPhone').value,
+                    address: document.getElementById('resAddress').value
+                })
+            });
+            showToast('✅ تم الحفظ');
+        }
+
+        // ===== الدعم الفني =====
+        async function loadSupportInfo() {
+            const r = await fetch('/api/settings/support-info');
+            const d = await r.json();
+            document.getElementById('supportPhone').value = d.support_phone || '';
+            document.getElementById('supportWhatsapp').value = d.whatsapp || '';
+            document.getElementById('supportFacebook').value = d.facebook || '';
+            document.getElementById('supportInstagram').value = d.instagram || '';
+        }
+        async function saveSupportInfo() {
+            await fetch('/api/settings/support-info', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    support_phone: document.getElementById('supportPhone').value,
+                    whatsapp: document.getElementById('supportWhatsapp').value,
+                    facebook: document.getElementById('supportFacebook').value,
+                    instagram: document.getElementById('supportInstagram').value
+                })
+            });
+            showToast('✅ تم الحفظ');
+        }
+
+        // ===== عملة =====
+        async function loadCurrency() {
+            const r = await fetch('/api/settings/currency');
+            const d = await r.json();
+            document.getElementById('currency').value = d.currency || 'SYP';
+            document.getElementById('usdRate').value = d.usd_rate || '';
+            document.getElementById('eurRate').value = d.eur_rate || '';
+        }
+        async function saveCurrency() {
+            await fetch('/api/settings/currency', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    currency: document.getElementById('currency').value,
+                    usd_rate: parseFloat(document.getElementById('usdRate').value) || 0,
+                    eur_rate: parseFloat(document.getElementById('eurRate').value) || 0
+                })
+            });
+            showToast('✅ تم الحفظ');
+        }
+
+        // ===== طابعة =====
+        async function loadPrinter() {
+            const r = await fetch('/api/printer/settings');
+            const d = await r.json();
+            document.getElementById('paperWidth').value = d.paper_width || 80;
+            document.getElementById('fontSize').value = d.font_size || 'medium';
+            document.getElementById('copies').value = d.copies || 1;
+            document.getElementById('footerText').value = d.footer_text || '';
+        }
+        async function savePrinter() {
+            await fetch('/api/printer/settings', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    paper_width: parseInt(document.getElementById('paperWidth').value),
+                    font_size: document.getElementById('fontSize').value,
+                    copies: parseInt(document.getElementById('copies').value),
+                    footer_text: document.getElementById('footerText').value
+                })
+            });
+            showToast('✅ تم الحفظ');
+        }
+
+        // ===== مستخدمين =====
+        async function loadUsers() {
+            const r = await fetch('/api/settings/users');
+            const users = await r.json();
+            const list = document.getElementById('usersList');
+            if (users.length === 0) {
+                list.innerHTML = '<p class="text-gray-500">لا يوجد مستخدمين</p>';
+            } else {
+                list.innerHTML = users.map(u => `
+                    <div class="flex justify-between items-center bg-gray-50 p-2 rounded border">
+                        <span>${u.username} <span class="text-xs text-gray-500">(${u.role==='manager'?'مدير':'كاشير'})</span></span>
+                        <button onclick="deleteUser(${u.id})" class="text-red-500 text-sm">✕</button>
+                    </div>
+                `).join('');
+            }
+        }
+        async function addUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const role = document.getElementById('newRole').value;
+            if (!username || !password) return showToast('⚠️ املأ جميع الحقول');
+            await fetch('/api/settings/users', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password, role})
+            });
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+            await loadUsers();
+            showToast('✅ تم إضافة المستخدم');
+        }
+        async function deleteUser(id) {
+            if (!confirm('حذف هذا المستخدم؟')) return;
+            await fetch('/api/settings/users/' + id, {method: 'DELETE'});
+            await loadUsers();
+            showToast('✅ تم الحذف');
+        }
+
+        // ===== قفل =====
+        async function loadLock() {
+            const r = await fetch('/api/settings/lock');
+            const d = await r.json();
+            document.getElementById('lockEnabled').checked = d.enabled || false;
+            document.getElementById('lockTimeout').value = d.timeout || 5;
+        }
+        async function saveLock() {
+            const enabled = document.getElementById('lockEnabled').checked;
+            if (enabled) {
+                const usersRes = await fetch('/api/settings/users');
+                const users = await usersRes.json();
+                if (!users || users.length === 0) {
+                    showToast('⚠️ لازم تضيف مستخدم واحد على الأقل (بالأعلى) قبل تفعيل القفل، وإلا رح تنحبس برا الشاشة');
+                    document.getElementById('lockEnabled').checked = false;
+                    return;
+                }
+            }
+            await fetch('/api/settings/lock', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    enabled,
+                    timeout: parseInt(document.getElementById('lockTimeout').value) || 5
+                })
+            });
+            showToast('✅ تم الحفظ');
+        }
+
+        // ===== نسخ احتياطي =====
+        async function loadBackups() {
+            const r = await fetch('/api/settings/backups');
+            const files = await r.json();
+            document.getElementById('backupsList').innerHTML = files.length > 0 ?
+                '📋 ' + files.join('<br>📋 ') : '';
+        }
+        async function createBackup() {
+            await fetch('/api/settings/backup', {method: 'POST'});
+            await loadBackups();
+            showToast('✅ تم إنشاء نسخة احتياطية');
+        }
+
+        // ===== تحديث =====
+        async function loadVersion() {
+            const r = await fetch('/api/check-update');
+            const d = await r.json();
+            document.getElementById('currentVersion').textContent = d.current;
+        }
+        async function checkUpdate() {
+            showToast('🔄 جارِ التحقق من GitHub...');
+            try {
+                const res = await fetch('/api/check-update');
+                const data = await res.json();
+                if (data.error) {
+                    showToast('⚠️ تعذر الاتصال - تأكد من وجود إنترنت');
+                } else if (data.updated_files && data.updated_files.length > 0) {
+                    showToast(`✅ تم تحديث ${data.updated_files.length} ملف لنسخة v${data.latest} - أعد تشغيل البرنامج`);
+                } else {
+                    showToast(`✅ الإصدار الحالي (v${data.current}) هو الأحدث`);
+                }
+            } catch (e) {
+                showToast('❌ خطأ بالتحقق من التحديث');
+            }
+        }
+
+        async function doLogout() {
+            try { await fetch('/api/auth/logout', { method: 'POST' }); } catch(e) {}
+            window.location.href = '/';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+
+        init();
+    </script>
+</body>
+</html>
